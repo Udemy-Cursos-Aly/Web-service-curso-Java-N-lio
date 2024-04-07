@@ -1,8 +1,10 @@
 package com.udemynelio.course.config;
 
+import com.udemynelio.course.entities.Category;
 import com.udemynelio.course.entities.Order;
 import com.udemynelio.course.entities.User;
 import com.udemynelio.course.entities.enums.OrderStatus;
+import com.udemynelio.course.repositories.CategoryRepository;
 import com.udemynelio.course.repositories.OrderRepository;
 import com.udemynelio.course.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class ProfileTestConfig implements CommandLineRunner {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @Override
     public void run(String... args) throws Exception {
         User userOne = new User(null, "Alyasaf", "aly@email.com.br", "(61)993021918", "*****");
@@ -31,7 +36,12 @@ public class ProfileTestConfig implements CommandLineRunner {
         Order orderTwo = new Order(null, Instant.parse("2024-05-20T03:42:10Z"), OrderStatus.SHIPPED, userTwo);
         Order orderThree = new Order(null, Instant.parse("2024-04-21T15:21:22Z"), OrderStatus.PAID, userOne);
 
+        Category categoryOne = new Category(null, "Games");
+        Category categoryTwo = new Category(null, "Eletrônicos");
+        Category categoryThree = new Category(null, "Livros");
+
         repository.saveAll(Arrays.asList(userOne, userTwo));
         orderRepository.saveAll(Arrays.asList(orderOne, orderTwo, orderThree));
+        categoryRepository.saveAll(Arrays.asList(categoryOne, categoryTwo, categoryThree));
     }
 }
