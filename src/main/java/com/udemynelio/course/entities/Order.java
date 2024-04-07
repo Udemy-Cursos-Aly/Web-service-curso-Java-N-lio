@@ -1,7 +1,7 @@
 package com.udemynelio.course.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.udemynelio.course.entities.enums.OrderStatus;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -19,15 +19,18 @@ public class Order implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant moment;
 
+    private String orderStatus;
+
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
 
     public Order() {}
 
-    public Order(Long id, Instant moment, User client) {
+    public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
         this.id = id;
         this.moment = moment;
+        setOrderStatus(orderStatus);
         this.client = client;
     }
 
@@ -45,6 +48,14 @@ public class Order implements Serializable {
 
     public void setMoment(Instant moment) {
         this.moment = moment;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.valueOfOrderStatus(orderStatus);
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus.getDescription();
     }
 
     public User getClient() {
