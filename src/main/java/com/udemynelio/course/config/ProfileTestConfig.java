@@ -55,5 +55,13 @@ public class ProfileTestConfig implements CommandLineRunner {
         orderRepository.saveAll(Arrays.asList(orderOne, orderTwo, orderThree));
         categoryRepository.saveAll(Arrays.asList(categoryOne, categoryTwo, categoryThree));
         productRepository.saveAll(Arrays.asList(productOne, productTwo, productThree, productFor, productFive));
+
+        productOne.getCategories().add(categoryTwo);
+        productTwo.getCategories().add(categoryTwo);
+        productThree.getCategories().add(categoryTwo);
+        productFor.getCategories().add(categoryOne);
+        productFive.getCategories().add(categoryThree);
+
+        productRepository.saveAll(Arrays.asList(productOne, productTwo, productThree, productFor, productFive));
     }
 }
