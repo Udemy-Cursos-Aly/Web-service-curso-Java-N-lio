@@ -53,6 +53,8 @@ public class ProfileTestConfig implements CommandLineRunner {
         OrderItem orderItemThree = new OrderItem(orderTwo, productThree, 2, productThree.getPrice());
         OrderItem orderItemFor = new OrderItem(orderThree, productFive, 2, productFive.getPrice());
 
+        Payment paymentOne = new Payment(null, Instant.parse("2024-04-21T17:21:22Z"), orderThree);
+
         repository.saveAll(Arrays.asList(userOne, userTwo));
         orderRepository.saveAll(Arrays.asList(orderOne, orderTwo, orderThree));
         categoryRepository.saveAll(Arrays.asList(categoryOne, categoryTwo, categoryThree));
@@ -66,5 +68,9 @@ public class ProfileTestConfig implements CommandLineRunner {
 
         productRepository.saveAll(Arrays.asList(productOne, productTwo, productThree, productFor, productFive));
         orderItemRepository.saveAll(Arrays.asList(orderItemOne, orderItemTwo, orderItemThree, orderItemFor));
+
+        orderThree.setPayment(paymentOne);
+
+        orderRepository.save(orderThree);
     }
 }
