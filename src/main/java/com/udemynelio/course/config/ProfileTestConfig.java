@@ -1,14 +1,8 @@
 package com.udemynelio.course.config;
 
-import com.udemynelio.course.entities.Category;
-import com.udemynelio.course.entities.Order;
-import com.udemynelio.course.entities.Product;
-import com.udemynelio.course.entities.User;
+import com.udemynelio.course.entities.*;
 import com.udemynelio.course.entities.enums.OrderStatus;
-import com.udemynelio.course.repositories.CategoryRepository;
-import com.udemynelio.course.repositories.OrderRepository;
-import com.udemynelio.course.repositories.ProductRepository;
-import com.udemynelio.course.repositories.UserRepository;
+import com.udemynelio.course.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +26,9 @@ public class ProfileTestConfig implements CommandLineRunner {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+
     @Override
     public void run(String... args) throws Exception {
         User userOne = new User(null, "Alyasaf", "aly@email.com.br", "(61)993021918", "*****");
@@ -51,6 +48,11 @@ public class ProfileTestConfig implements CommandLineRunner {
         Product productFor = new Product(null, "Xbox", "Console Xbox Series S", 2590.0, "");
         Product productFive = new Product(null, "Harry Potter", "Ebook Harry Potter e o enigma do princípe", 120.90, "");
 
+        OrderItem orderItemOne = new OrderItem(orderOne, productOne, 2, productOne.getPrice());
+        OrderItem orderItemTwo = new OrderItem(orderOne, productThree, 1, productThree.getPrice());
+        OrderItem orderItemThree = new OrderItem(orderTwo, productThree, 2, productThree.getPrice());
+        OrderItem orderItemFor = new OrderItem(orderThree, productFive, 2, productFive.getPrice());
+
         repository.saveAll(Arrays.asList(userOne, userTwo));
         orderRepository.saveAll(Arrays.asList(orderOne, orderTwo, orderThree));
         categoryRepository.saveAll(Arrays.asList(categoryOne, categoryTwo, categoryThree));
@@ -63,5 +65,6 @@ public class ProfileTestConfig implements CommandLineRunner {
         productFive.getCategories().add(categoryThree);
 
         productRepository.saveAll(Arrays.asList(productOne, productTwo, productThree, productFor, productFive));
+        orderItemRepository.saveAll(Arrays.asList(orderItemOne, orderItemTwo, orderItemThree, orderItemFor));
     }
 }
