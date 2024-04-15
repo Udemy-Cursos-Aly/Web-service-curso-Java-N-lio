@@ -27,7 +27,20 @@ public class UserService {
         return repository.save(entity);
     }
 
+    @Transactional
+    public User update(Long id, User entity) {
+        var user = repository.getReferenceById(id);
+        updateData(entity, user);
+        return repository.save(user);
+    }
+
     public void delete(Long id) {
         repository.deleteById(id);
+    }
+
+    private void updateData(User entity, User user) {
+        user.setName(entity.getName());
+        user.setEmail(entity.getEmail());
+        user.setPhone(entity.getPhone());
     }
 }
