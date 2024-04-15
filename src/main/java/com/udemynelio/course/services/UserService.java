@@ -1,6 +1,8 @@
 package com.udemynelio.course.services;
 
 import com.udemynelio.course.entities.User;
+import com.udemynelio.course.exceptions.resource.ResourceExceptionHandler;
+import com.udemynelio.course.exceptions.service.ServiceException;
 import com.udemynelio.course.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ public class UserService {
 
     public User findById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Esse usuário não existe: " + id));
+                .orElseThrow(() -> new ServiceException("User not found with id: ", id));
     }
 
     @Transactional
