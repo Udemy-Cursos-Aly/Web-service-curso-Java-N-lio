@@ -37,9 +37,13 @@ public class UserService {
 
     @Transactional
     public User update(Long id, User entity) {
-        var user = repository.getReferenceById(id);
-        updateData(entity, user);
-        return repository.save(user);
+        try {
+            var user = repository.getReferenceById(id);
+            updateData(entity, user);
+            return repository.save(user);
+        } catch (EntityNotFoundException ex) {
+            throw new ServiceException("User not found: ", id);
+        }
     }
 
     public void delete(Long id) {
