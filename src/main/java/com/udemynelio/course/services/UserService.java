@@ -5,6 +5,7 @@ import com.udemynelio.course.exceptions.resource.ResourceExceptionHandler;
 import com.udemynelio.course.exceptions.service.DatabaseExeption;
 import com.udemynelio.course.exceptions.service.ServiceException;
 import com.udemynelio.course.repositories.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -43,9 +44,12 @@ public class UserService {
 
     public void delete(Long id) {
         try {
-            repository.deleteById(id);
+            if (repository.existsById(id))
+                repository.deleteById(id);
+            else
+                throw new EntityNotFoundException("Id not found: " + id);
         } catch (EmptyResultDataAccessException | DataIntegrityViolationException ex) {
-            throw new DatabaseExeption(ex.getMessage());
+            throw new DatabaseExeption("Error reference id in table");
         }
     }
 
