@@ -1,19 +1,16 @@
 package com.udemynelio.course.services;
 
 import com.udemynelio.course.entities.User;
-import com.udemynelio.course.exceptions.resource.ResourceExceptionHandler;
 import com.udemynelio.course.exceptions.service.DatabaseExeption;
 import com.udemynelio.course.exceptions.service.ServiceException;
 import com.udemynelio.course.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
 import java.util.List;
 
 @Service
